@@ -1,0 +1,27 @@
+.counter-section {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.counter-section h2 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.counter-section button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.counter-section button:hover {
+  background-color: #45a049;
+} 
