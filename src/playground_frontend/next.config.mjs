@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Only load .env if environment variables are not set (for local development)
-config({ path: resolve(__dirname, '../../.env') });
+config({ path: resolve(__dirname, '.env') });
 
 // Initialize canister IDs
 DFXWebPackConfig.initCanisterIds();
@@ -18,7 +18,7 @@ DFXWebPackConfig.initCanisterIds();
 const EnvPlugin = new webpack.EnvironmentPlugin({
   NEXT_PUBLIC_DFX_NETWORK: process.env.DFX_NETWORK,
   NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND: process.env.CANISTER_ID_PLAYGROUND_BACKEND,
-  NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_FRONTEND: process.env.CANISTER_ID_PLAYGROUND_FRONTEND,
+  NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_FRONTEND: process.env.CANISTER_ID_PLAYGROUND_FRONTEND || process.env.CANISTER_ID,
   NEXT_PUBLIC_CANISTER_ID: process.env.CANISTER_ID,
   NEXT_PUBLIC_CANISTER_CANDID_PATH: process.env.CANISTER_CANDID_PATH,
 });

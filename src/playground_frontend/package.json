@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "setup": "npm i && dfx canister create playground_backend && dfx generate playground_backend && dfx deploy",
+    "setup": "npm i && dfx canister create playground_backend && yarn generate",
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\"",
     "export": "next build",
     "dev": "next dev -p 3001",
@@ -16,7 +16,9 @@
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
     "deploy": "dfx deploy",
     "update-csp": "node scripts/update-ic-assets.js",
-    "chain": "dfx start --background"
+    "chain": "dfx start --background",
+    "fix-declarations": "node scripts/fix-declarations.js",
+    "generate": "dfx generate playground_backend && npm run fix-declarations"
   },
   "dependencies": {
     "@dfinity/agent": "^2.1.3",

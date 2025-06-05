@@ -19,7 +19,7 @@ dfx --version
 ```
 
 ```bash
-cd playground/src/playground_frontend/
+cd src/playground_frontend/
 dfx help
 dfx canister --help
 ```
@@ -45,7 +45,7 @@ yarn deploy
 To start the frontend locally (not deploy as a canister), run:
 
 ```bash
-npm start
+yarn dev
 ```
 
 Which will start a server at `http://localhost:3001`, proxying API requests to the replica at port 4943.

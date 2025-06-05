@@ -2,7 +2,8 @@
   "canisters": {
     "playground_backend": {
       "main": "../playground_backend/main.mo",
-      "type": "motoko"
+      "type": "motoko",
+      "declarations": { "output": "./declarations/playground_backend" }
     },
     "playground_frontend": {
       "dependencies": ["playground_backend"],
