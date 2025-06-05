@@ -1,0 +1,24 @@
+{
+  "canisters": {
+    "playground_backend": {
+      "main": "../playground_backend/main.mo",
+      "type": "motoko"
+    },
+    "playground_frontend": {
+      "dependencies": ["playground_backend"],
+      "frontend": {
+        "entrypoint": "out/index.html"
+      },
+      "source": ["out"],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}

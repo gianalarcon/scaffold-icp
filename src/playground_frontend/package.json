@@ -5,26 +5,40 @@
   "type": "module",
   "scripts": {
     "setup": "npm i && dfx canister create playground_backend && dfx generate playground_backend && dfx deploy",
-    "start": "vite --port 3000",
-    "prebuild": "dfx generate playground_backend",
-    "build": "tsc && vite build",
-    "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\""
+    "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\"",
+    "export": "next build",
+    "dev": "next dev -p 3001",
+    "lint": "next lint",
+    "build": "next build && npm run update-csp",
+    "build:static": "next build",
+    "start": "node server.js",
+    "vercel": "vercel",
+    "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
+    "deploy": "dfx deploy",
+    "update-csp": "node scripts/update-ic-assets.js"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@dfinity/agent": "^2.1.3",
     "@dfinity/candid": "^2.1.3",
-    "@dfinity/principal": "^2.1.3"
+    "@dfinity/principal": "^2.1.3",
+    "@ic-reactor/parser": "^0.4.4",
+    "@ic-reactor/react": "^1.16.0",
+    "next": "^15.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vercel": "^42.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@vitejs/plugin-react": "^4.0.1",
     "dotenv": "^16.3.1",
+    "eslint-config-next": "^15.2.0",
+    "raw-loader": "^4.0.2",
     "sass": "^1.63.6",
     "typescript": "^5.1.3",
     "vite": "^4.3.9",
-    "vite-plugin-environment": "^1.1.3"
+    "vite-plugin-environment": "^1.1.3",
+    "webpack": "^5.99.9"
   }
 }
