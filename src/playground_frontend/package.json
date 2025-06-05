@@ -15,7 +15,8 @@
     "vercel": "vercel",
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
     "deploy": "dfx deploy",
-    "update-csp": "node scripts/update-ic-assets.js"
+    "update-csp": "node scripts/update-ic-assets.js",
+    "chain": "dfx start --background"
   },
   "dependencies": {
     "@dfinity/agent": "^2.1.3",

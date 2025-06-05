@@ -23,3 +23,7 @@ dist/
 
 # environment variables
 .env
+
+src/playground_frontend/out/*
+
+src/playground_frontend/.next/*
