@@ -4,14 +4,6 @@
       "main": "../playground_backend/main.mo",
       "type": "motoko",
       "declarations": { "output": "./app/declarations/playground_backend" }
-    },
-    "playground_frontend": {
-      "dependencies": ["playground_backend"],
-      "frontend": {
-        "entrypoint": "out/index.html"
-      },
-      "source": ["out"],
-      "type": "assets"
     }
   },
   "defaults": {

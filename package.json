@@ -10,6 +10,7 @@
     "build": "yarn workspace playground_frontend build",
     "dev": "yarn workspace playground_frontend start",
     "deploy": "yarn workspace playground_frontend deploy",
+    "deploy:playground": "yarn workspace playground_frontend deploy:playground",
     "chain": "yarn workspace playground_frontend chain",
     "install": "yarn install"
   }

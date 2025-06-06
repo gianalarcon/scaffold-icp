@@ -14,6 +14,7 @@
     "vercel": "vercel",
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
     "deploy": "dfx deploy playground_backend --yes && yarn generate",
+    "deploy:playground": "dfx deploy --network playground --yes && yarn generate",
     "update-csp": "node scripts/update-ic-assets.js",
     "chain": "dfx start --background",
     "fix-declarations": "node scripts/fix-declarations.js",
