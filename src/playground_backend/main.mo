@@ -30,7 +30,7 @@ actor {
     return counter;
   };
 
-  public query func dgetCount() : async Nat {
+  public query func getCount() : async Nat {
     return counter;
   };
 

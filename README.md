@@ -13,13 +13,12 @@ If you want to start working on your project right away, you might want to try t
 
 Install dfx:
 
-```
+```bash
 sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 dfx --version
 ```
 
 ```bash
-cd src/playground_frontend/
 dfx help
 dfx canister --help
 ```
@@ -33,7 +32,7 @@ If you want to test your project locally, you can use the following commands:
 yarn chain
 
 # Install necessary dependencies
-yarn setup
+yarn install
 
 # Build NextJS for deploying to frontend canister
 yarn build
@@ -54,7 +53,11 @@ To deploy on vercel, make sure you first deploy the canister to mainnet or playg
 
 ```
 # Playground
-yarn deploy:playground
+yarn deploy --network playground
+
+# Mainnet
+
+yarn deploy --network ic
 ```
 
 Then:
