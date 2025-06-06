@@ -3,7 +3,7 @@
     "playground_backend": {
       "main": "../playground_backend/main.mo",
       "type": "motoko",
-      "declarations": { "output": "./declarations/playground_backend" }
+      "declarations": { "output": "./app/declarations/playground_backend" }
     },
     "playground_frontend": {
       "dependencies": ["playground_backend"],

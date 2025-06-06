@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const fixDeclarations = () => {
-  const declarationsPath = path.join(__dirname, '..', 'declarations', 'playground_backend', 'index.js');
+  const declarationsPath = path.join(__dirname, '..', 'app', 'declarations', 'playground_backend', 'index.js');
   
   try {
     // Read the file

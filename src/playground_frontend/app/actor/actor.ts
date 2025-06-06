@@ -1,6 +1,6 @@
 // actor.ts
 import { createReactor } from "@ic-reactor/react"
-import { idlFactory, playground_backend } from "declarations/playground_backend"
+import { idlFactory, playground_backend } from "@/app/declarations/playground_backend"
 
 type Actor = typeof playground_backend
 

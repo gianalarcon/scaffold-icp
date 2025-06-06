@@ -1,4 +1,4 @@
-import { _SERVICE } from 'declarations/playground_backend/playground_backend.did';
+import { _SERVICE } from '@/app/declarations/playground_backend/playground_backend.did';
 import { ActorSubclass } from '@dfinity/agent';
 
 

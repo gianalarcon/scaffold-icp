@@ -2,8 +2,6 @@ import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 import Time "mo:base/Time";
 import Array "mo:base/Array";
-import HashMap "mo:base/HashMap";
-import Iter "mo:base/Iter";
 
 actor {
   stable var counter : Nat = 0;

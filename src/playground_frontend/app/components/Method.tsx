@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { Actor, ActorSubclass } from '@dfinity/agent';
 import { renderInput } from '@dfinity/candid';
-import { playground_backend } from 'declarations/playground_backend';
+import { playground_backend } from '@/app/declarations/playground_backend';
 import MethodList from './MethodList';
+import QueryMethods from './QueryMethods';
 import { MethodInfo } from '../types/method';
-import { _SERVICE } from 'declarations/playground_backend/playground_backend.did';
+import { _SERVICE } from '@/app/declarations/playground_backend/playground_backend.did';
 
 export type PlaygroundBackend = ActorSubclass<_SERVICE> & {
   [key: string]: (...args: any[]) => Promise<any>;
@@ -26,10 +27,18 @@ const Method: React.FC = () => {
         const availableMethods = Actor.interfaceOf(playground_backend)._fields
           .sort(([a], [b]) => (a > b ? 1 : -1));
 
-        setMethods(availableMethods);
+        // Filter out query methods without arguments
+        const updateMethods = availableMethods.filter(([_, info]) => {
+          // Keep methods that either:
+          // 1. Have arguments (argTypes.length > 0)
+          // 2. Are not query methods (!info.annotations.includes('query'))
+          return info.argTypes.length > 0 || !info.annotations.includes('query');
+        });
+
+        setMethods(updateMethods);
 
         const boxes: Record<string, any[]> = {};
-        availableMethods.forEach(([name, info]) => {
+        updateMethods.forEach(([name, info]) => {
           if (info.argTypes.length > 0) {
             boxes[name] = info.argTypes.map(type => renderInput(type));
           }
@@ -78,14 +87,17 @@ const Method: React.FC = () => {
   }
 
   return (
-    <MethodList
-      methods={methods}
-      inputBoxes={inputBoxes}
-      loading={loading}
-      errors={errors}
-      results={results}
-      onMethodCall={handleMethodCall}
-    />
+    <div>
+      <QueryMethods />
+      <MethodList
+        methods={methods}
+        inputBoxes={inputBoxes}
+        loading={loading}
+        errors={errors}
+        results={results}
+        onMethodCall={handleMethodCall}
+      />
+    </div>
   );
 };
 
