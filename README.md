@@ -54,10 +54,7 @@ To deploy on vercel, make sure you first deploy the canister to mainnet or playg
 
 ```
 # Playground
-yarn deploy --network playground
-
-# Mainnet
-yarn deploy --network ic
+yarn deploy:playground
 ```
 
 Then:
