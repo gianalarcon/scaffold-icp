@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "install": "npm i && dfx canister create playground_backend && yarn generate",
+    "postinstall": "dfx canister create playground_backend && yarn generate",
     "format": "prettier --write \"src/**/*.{json,js,jsx,ts,tsx,css,scss}\"",
     "export": "next build",
     "start": "next dev -p 3001",
