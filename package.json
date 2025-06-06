@@ -8,13 +8,9 @@
   "scripts": {
     "start": "yarn workspace playground_frontend start",
     "build": "yarn workspace playground_frontend build",
-    "build:backend": "dfx build playground_backend",
     "dev": "yarn workspace playground_frontend start",
     "deploy": "yarn workspace playground_frontend deploy",
     "chain": "yarn workspace playground_frontend chain",
-    "generate": "yarn workspace playground_frontend generate",
-    "update-csp": "yarn workspace playground_frontend update-csp",
-    "fix-declarations": "yarn workspace playground_frontend fix-declarations",
-    "install:all": "yarn install"
+    "install": "yarn install"
   }
 } 
