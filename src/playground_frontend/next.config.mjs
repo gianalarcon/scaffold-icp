@@ -1,9 +1,10 @@
+/** @type {import('next').NextConfig} */
+import webpack from "webpack";
+import nextPWA from "next-pwa";
 import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
-import webpack from 'webpack';
 import { config } from 'dotenv';
 import DFXWebPackConfig from './dfx.webpack.config.js';
-import { execSync } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,16 +24,58 @@ const EnvPlugin = new webpack.EnvironmentPlugin({
   NEXT_PUBLIC_CANISTER_CANDID_PATH: process.env.CANISTER_CANDID_PATH,
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Plugin
-    config.plugins.push(EnvPlugin);
 
-    // Important: return the modified config
+const withPWA = nextPWA({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: true,
+  skipWaiting: true,
+});
+
+const nextConfig = {
+  reactStrictMode: true,
+  logging: {
+    incomingRequests: false,
+  },
+  images: {
+    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "identicon.starknet.id",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.starkurabu.com",
+        pathname: "/**",
+      },
+    ],
+  },
+  typescript: {
+    ignoreBuildErrors: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
+  },
+  eslint: {
+    ignoreDuringBuilds: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
+  },
+  webpack: (config, { dev, isServer }) => {
+    config.plugins.push(EnvPlugin);
+    config.resolve.fallback = { fs: false, net: false, tls: false };
+    config.externals.push("pino-pretty", "lokijs", "encoding");
+    config.plugins.push(
+      new webpack.NormalModuleReplacementPlugin(/^node:(.*)$/, (resource) => {
+        resource.request = resource.request.replace(/^node:/, "");
+      }),
+    );
+
+    if (dev && !isServer) {
+      config.infrastructureLogging = {
+        level: "error",
+      };
+    }
+
     return config;
   },
-  output: "export",
 };
 
-export default nextConfig;
+export default withPWA(nextConfig);

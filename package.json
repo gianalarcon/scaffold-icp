@@ -10,7 +10,7 @@
     "build": "yarn workspace playground_frontend build",
     "dev": "yarn workspace playground_frontend start",
     "deploy": "yarn workspace playground_frontend deploy",
-    "deploy:playground": "dfx deploy playground_backend --network playground --yes && yarn generate",
-    "chain": "yarn workspace playground_frontend chain"
+    "chain": "yarn workspace playground_frontend chain",
+    "vercel": "yarn workspace playground_frontend vercel"
   }
-} 
+}
