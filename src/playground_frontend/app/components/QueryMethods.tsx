@@ -23,7 +23,7 @@ const QueryMethods: React.FC = () => {
   }, [playground_backend]);
 
   return (
-    <div style={{ marginTop: '20px' }}>
+    <div key={queryMethods.toString()} style={{ marginTop: '20px' }}>
       <h3>Query Methods (Auto-refreshing)</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {queryMethods.map(([methodName, _]) => (
