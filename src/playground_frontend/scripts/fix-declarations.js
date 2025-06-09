@@ -21,7 +21,7 @@ export const canisterId = (() => {
   if (!_canisterId) {
     _canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND;
     console.log("==============DEBUG CANISTER ID===============");
-    console.log("Random token:", randomToken);
+    console.log("Random token:", "${randomToken}");
     console.log("Initial canisterId:", _canisterId);
     console.log("Environment:", process.env.NEXT_PUBLIC_DFX_NETWORK);
     console.log("============================================");
