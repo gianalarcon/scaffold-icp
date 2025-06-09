@@ -51,18 +51,38 @@ Which will start a server at `http://localhost:3001`, proxying API requests to t
 
 To deploy on vercel, make sure you first deploy the canister to mainnet or playground by running:
 
-```
+```bash
 # Playground
 yarn deploy --network playground
 
 # Mainnet
-
 yarn deploy --network ic
 ```
 
-Then:
-```
+### Deploying to Vercel
+
+```bash
 yarn vercel
+```
+
+### Additional commands
+
+To upgrade the backend canister, run:
+
+```bash
+yarn deploy:upgrade
+```
+
+To run the local chain replica in background, run:
+
+```bash
+yarn chain --background
+```
+
+To generate the candid interface, run:
+
+```bash
+yarn generate
 ```
 
 ### Note for NextJS
@@ -70,8 +90,6 @@ yarn vercel
 - After deploying your backend code as shown above, you can run Next.js local dev server npm run dev and edit your frontend code with all the benefits of hot code deploy.
 
 - One thing to note is we use Next.js static code export here for hosting in Internet Computer so we can't use any features of Next.js that require server side NodeJS. Potentially, there might be ways to use Internet Computer canister as backend while deploying Next.js dapp to a hosting like Vercel that supports NodeJS server in the future. Further research is needed on that aspect. However, if you do want to run everything decentralized on blockchain including the frontend, you would want to deploy the exported static code to Internet Computer as well.
-
-
 
 ### Note on frontend environment variables
 
@@ -173,8 +191,9 @@ const Counter: React.FC = () => {
 ### Troubleshooting
 
 1. **Type Errors**: If you encounter type errors, ensure your Candid interface is up to date by running:
+
 ```bash
-dfx generate playground_backend
+yarn chain
 ```
 
 ### Resources
