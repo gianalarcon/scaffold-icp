@@ -51,7 +51,7 @@ const Method: React.FC = () => {
 
     setMounted(true);
     initActor();
-  }, []);
+  }, [playground_backend]);
 
   const handleMethodCall = async (methodName: string): Promise<void> => {
     if (!playground_backend) {

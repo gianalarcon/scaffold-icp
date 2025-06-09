@@ -72,6 +72,14 @@ const nextConfig = {
       config.infrastructureLogging = {
         level: "error",
       };
+
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: /node_modules/,
+        poll: 1000,
+        aggregateTimeout: 300,
+        followSymlinks: true,
+      };
     }
 
     return config;

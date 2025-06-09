@@ -20,7 +20,7 @@ const QueryMethods: React.FC = () => {
     };
 
     initQueryMethods();
-  }, []);
+  }, [playground_backend]);
 
   return (
     <div style={{ marginTop: '20px' }}>
