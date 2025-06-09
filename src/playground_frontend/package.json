@@ -12,8 +12,8 @@
     "build:static": "next build",
     "vercel": "vercel",
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
-    "deploy": "dfx deploy playground_backend --yes -m reinstall && yarn generate",
-    "deploy:upgrade": "dfx deploy playground_backend --yes -m upgrade && yarn generate",
+    "deploy": "yarn generate && dfx deploy playground_backend --yes -m reinstall",
+    "deploy:upgrade": "yarn generate && dfx deploy playground_backend --yes -m upgrade",
     "chain": "dfx start --clean",
     "fix-declarations": "node scripts/fix-declarations.js",
     "generate": "dfx generate playground_backend && yarn fix-declarations"
