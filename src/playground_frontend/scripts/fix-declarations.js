@@ -15,7 +15,7 @@ const fixDeclarations = () => {
     // Replace the canisterId export
     content = content.replace(
       /export const canisterId =[\s\S]*?;/,
-      `export const canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND;`
+      `export const canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND;\nconsole.log("==============DEBUG NOBODY===============");\nconsole.log(canisterId);\nconsole.log(process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND);\nconsole.log("==============DEBUG NOBODY===============");`
     );
     
     // Replace the createActor function while preserving the rest
