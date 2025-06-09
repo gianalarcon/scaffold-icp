@@ -18,6 +18,16 @@ const fixDeclarations = () => {
       `export const canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND;`
     );
     
+    // Replace the createActor function while preserving the rest
+    content = content.replace(
+      /export const createActor = \(canisterId, options = \{\}\) => \{[\s\S]*?const agent = options\.agent \|\| new HttpAgent\(\{[\s\S]*?\}\);/,
+      `export const createActor = (canisterId, options = {}) => {
+  const agent = options.agent || new HttpAgent({ 
+    ...options.agentOptions,
+    host: process.env.NEXT_PUBLIC_DFX_NETWORK === "local" ? "http://localhost:4943" : "https://icp0.io"
+  });`
+    );
+    
     // Write the modified content back
     fs.writeFileSync(declarationsPath, content, 'utf8');
     console.log('Successfully updated declarations file');
