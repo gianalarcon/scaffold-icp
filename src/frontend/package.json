@@ -1,5 +1,5 @@
 {
-  "name": "playground_frontend",
+  "name": "frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,11 +12,11 @@
     "build:static": "next build",
     "vercel": "vercel",
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
-    "deploy": "yarn generate && dfx deploy playground_backend --yes -m reinstall",
-    "deploy:upgrade": "yarn generate && dfx deploy playground_backend --yes -m upgrade",
+    "deploy": "yarn generate && dfx deploy backend --yes -m reinstall",
+    "deploy:upgrade": "yarn generate && dfx deploy backend --yes -m upgrade",
     "chain": "dfx start --clean",
     "fix-declarations": "node scripts/fix-declarations.js",
-    "generate": "dfx generate playground_backend && yarn fix-declarations"
+    "generate": "dfx generate backend && yarn fix-declarations"
   },
   "dependencies": {
     "@dfinity/agent": "^2.1.3",

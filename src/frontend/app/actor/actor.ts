@@ -1,11 +1,11 @@
 // actor.ts
 import { createReactor } from "@ic-reactor/react"
-import { idlFactory, playground_backend } from "@/app/declarations/playground_backend"
+import { idlFactory, backend } from "@/app/declarations/backend"
 
-type Actor = typeof playground_backend
+type Actor = typeof backend
 
 export const { useActorStore, useAuth, useQueryCall, useUpdateCall } = createReactor<Actor>({
-  canisterId: process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND || "",
+  canisterId: process.env.NEXT_PUBLIC_CANISTER_ID_BACKEND || "",
   idlFactory,
   withLocalEnv: process.env.NEXT_PUBLIC_DFX_NETWORK === "local",
 })

@@ -1,9 +1,9 @@
 {
   "canisters": {
-    "playground_backend": {
-      "main": "../playground_backend/main.mo",
+    "backend": {
+      "main": "../backend/main.mo",
       "type": "motoko",
-      "declarations": { "output": "./app/declarations/playground_backend" }
+      "declarations": { "output": "./app/declarations/backend" }
     }
   },
   "defaults": {

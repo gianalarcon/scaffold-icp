@@ -3,16 +3,16 @@
   "private": true,
   "version": "1.0.0",
   "workspaces": [
-    "src/playground_frontend"
+    "src/frontend"
   ],
   "scripts": {
-    "start": "yarn workspace playground_frontend start",
-    "build": "yarn workspace playground_frontend build",
-    "dev": "yarn workspace playground_frontend start",
-    "deploy": "yarn workspace playground_frontend deploy",
-    "deploy:upgrade": "yarn workspace playground_frontend deploy:upgrade",
-    "chain": "yarn workspace playground_frontend chain",
-    "vercel": "yarn workspace playground_frontend vercel"
+    "start": "yarn workspace frontend start",
+    "build": "yarn workspace frontend build",
+    "dev": "yarn workspace frontend start",
+    "deploy": "yarn workspace frontend deploy",
+    "deploy:upgrade": "yarn workspace frontend deploy:upgrade",
+    "chain": "yarn workspace frontend chain",
+    "vercel": "yarn workspace frontend vercel"
   },
   "packageManager": "yarn@3.2.3"
 }

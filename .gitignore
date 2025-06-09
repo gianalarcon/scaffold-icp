@@ -25,9 +25,9 @@ dist/
 # environment variables
 .env
 
-src/playground_frontend/out/*
+src/frontend/out/*
 
-src/playground_frontend/.next/*
+src/frontend/.next/*
 
 .vscode/**
 node_modules

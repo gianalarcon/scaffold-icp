@@ -34,6 +34,10 @@ actor {
     return counter;
   };
 
+  public query func getDoubleCount() : async Nat {
+    return counter * 2;
+  };
+
   public func greetWithYearOfBirth(name : Text, yearOfBirth : Nat) : async Text {
     return "Hello, " # name # "! The current year of birth is " # Nat.toText(yearOfBirth) # ".";
   };

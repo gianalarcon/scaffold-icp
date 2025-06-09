@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { Actor, ActorSubclass } from '@dfinity/agent';
 import { renderInput } from '@dfinity/candid';
-import { playground_backend } from '@/app/declarations/playground_backend';
+import { backend } from '@/app/declarations/backend';
 import MethodList from './MethodList';
 import QueryMethods from './QueryMethods';
 import { MethodInfo } from '../types/method';
-import { _SERVICE } from '@/app/declarations/playground_backend/playground_backend.did';
+import { _SERVICE } from '@/app/declarations/backend/backend.did';
 
-export type PlaygroundBackend = ActorSubclass<_SERVICE> & {
+export type Backend = ActorSubclass<_SERVICE> & {
   [key: string]: (...args: any[]) => Promise<any>;
 };
 
@@ -24,7 +24,7 @@ const Method: React.FC = () => {
   useEffect(() => {
     const initActor = async () => {
       try {        
-        const availableMethods = Actor.interfaceOf(playground_backend)._fields
+        const availableMethods = Actor.interfaceOf(backend)._fields
           .sort(([a], [b]) => (a > b ? 1 : -1));
 
         // Filter out query methods without arguments
@@ -51,10 +51,10 @@ const Method: React.FC = () => {
 
     setMounted(true);
     initActor();
-  }, [playground_backend]);
+  }, [backend]);
 
   const handleMethodCall = async (methodName: string): Promise<void> => {
-    if (!playground_backend) {
+    if (!backend) {
       setErrors(prev => ({ ...prev, [methodName]: 'Actor not initialized' }));
       return;
     }
@@ -73,7 +73,7 @@ const Method: React.FC = () => {
         throw new Error('Invalid input values');
       }
 
-      const callResult = await (playground_backend as PlaygroundBackend)[methodName](...args);
+      const callResult = await (backend as Backend)[methodName](...args);
       setResults(prev => ({ ...prev, [methodName]: callResult }));
     } catch (err) {
       setErrors(prev => ({ ...prev, [methodName]: err instanceof Error ? err.message : 'Unknown error' }));
@@ -82,7 +82,7 @@ const Method: React.FC = () => {
     }
   };
 
-  if (!mounted || !playground_backend) {
+  if (!mounted || !backend) {
     return <div>Loading...</div>;
   }
 

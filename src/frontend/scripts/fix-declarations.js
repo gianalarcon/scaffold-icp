@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const fixDeclarations = () => {
-  const declarationsPath = path.join(__dirname, '..', 'app', 'declarations', 'playground_backend', 'index.js');
+  const declarationsPath = path.join(__dirname, '..', 'app', 'declarations', 'backend', 'index.js');
   
   try {
     // Read the file
@@ -15,7 +15,7 @@ const fixDeclarations = () => {
     // Replace the canisterId export
     content = content.replace(
       /export const canisterId =[\s\S]*?;/,
-      `export const canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_PLAYGROUND_BACKEND;`
+      `export const canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_BACKEND;`
     );
     
     // Replace the createActor function while preserving the rest

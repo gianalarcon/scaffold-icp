@@ -31,7 +31,7 @@ async function initCanisterIds() {
   canisters = network === "local" ? localCanisters : playgroundCanisters
 
   for (const canister in canisters) {
-    process.env[`CANISTER_ID_PLAYGROUND_BACKEND`] =
+    process.env[`CANISTER_ID_BACKEND`] =
       canisters[canister][network]
   }
 

@@ -3,15 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { useQueryCall } from '../actor/actor';
 import { Actor } from '@dfinity/agent';
-import { playground_backend } from '@/app/declarations/playground_backend';
-import { _SERVICE } from '@/app/declarations/playground_backend/playground_backend.did';
+import { backend } from '@/app/declarations/backend';
+import { _SERVICE } from '@/app/declarations/backend/backend.did';
 
 const QueryMethods: React.FC = () => {
   const [queryMethods, setQueryMethods] = useState<[string, any][]>([]);
 
   useEffect(() => {
     const initQueryMethods = () => {
-      const availableMethods = Actor.interfaceOf(playground_backend)._fields;
+      const availableMethods = Actor.interfaceOf(backend)._fields;
       // Filter for query methods without arguments
       const noArgQueryMethods = availableMethods.filter(([_, info]) => 
         info.annotations.includes('query') && info.argTypes.length === 0
@@ -20,7 +20,7 @@ const QueryMethods: React.FC = () => {
     };
 
     initQueryMethods();
-  }, [playground_backend]);
+  }, [backend]);
 
   return (
     <div key={queryMethods.toString()} style={{ marginTop: '20px' }}>
