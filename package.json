@@ -10,6 +10,7 @@
     "build": "yarn workspace playground_frontend build",
     "dev": "yarn workspace playground_frontend start",
     "deploy": "yarn workspace playground_frontend deploy",
+    "deploy:upgrade": "yarn workspace playground_frontend deploy:upgrade",
     "chain": "yarn workspace playground_frontend chain",
     "vercel": "yarn workspace playground_frontend vercel"
   }
