@@ -9,24 +9,51 @@ const fixDeclarations = () => {
   const declarationsPath = path.join(__dirname, '..', 'app', 'declarations', 'backend', 'index.js');
   
   try {
-    // Read the file
-    let content = fs.readFileSync(declarationsPath, 'utf8');
-    
-    // Replace the canisterId export
-    content = content.replace(
-      /export const canisterId =[\s\S]*?;/,
-      `export const canisterId = process.env.NEXT_PUBLIC_CANISTER_ID_BACKEND;`
-    );
-    
-    // Replace the createActor function while preserving the rest
-    content = content.replace(
-      /export const createActor = \(canisterId, options = \{\}\) => \{[\s\S]*?const agent = options\.agent \|\| new HttpAgent\(\{[\s\S]*?\}\);/,
-      `export const createActor = (canisterId, options = {}) => {
+    const content = `import { Actor, HttpAgent } from "@dfinity/agent";
+
+// Imports and re-exports candid interface
+import { idlFactory } from "./backend.did.js";
+import { icpConfig } from '@/icp-config';
+export { idlFactory } from "./backend.did.js";
+
+/* CANISTER_ID is replaced by webpack based on node environment
+ * Note: canister environment variable will be standardized as
+ * process.env.CANISTER_ID_<CANISTER_NAME_UPPERCASE>
+ * beginning in dfx 0.15.0
+ */
+export const canisterId = icpConfig.canisterId;
+
+export const createActor = (canisterId, options = {}) => {
   const agent = options.agent || new HttpAgent({ 
     ...options.agentOptions,
-    host: process.env.NEXT_PUBLIC_DFX_NETWORK === "local" ? "http://localhost:4943" : "https://icp0.io"
-  });`
+    host: icpConfig.host
+  });
+
+  if (options.agent && options.agentOptions) {
+    console.warn(
+      "Detected both agent and agentOptions passed to createActor. Ignoring agentOptions and proceeding with the provided agent."
     );
+  }
+
+  // Fetch root key for certificate validation during development
+  if (icpConfig.network !== "ic") {
+    agent.fetchRootKey().catch((err) => {
+      console.warn(
+        "Unable to fetch root key. Check to ensure that your local replica is running"
+      );
+      console.error(err);
+    });
+  }
+
+  // Creates an actor with using the candid interface and the HttpAgent
+  return Actor.createActor(idlFactory, {
+    agent,
+    canisterId,
+    ...options.actorOptions,
+  });
+};
+
+export const backend = canisterId ? createActor(canisterId) : undefined;`;
     
     // Write the modified content back
     fs.writeFileSync(declarationsPath, content, 'utf8');

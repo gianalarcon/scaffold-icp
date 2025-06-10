@@ -12,8 +12,8 @@
     "build:static": "next build",
     "vercel": "vercel",
     "vercel:yolo": "vercel --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true",
-    "deploy": "yarn generate && dfx deploy backend --yes -m reinstall",
-    "deploy:upgrade": "yarn generate && dfx deploy backend --yes -m upgrade",
+    "deploy": "node scripts/deploy.js",
+    "deploy:upgrade": "node scripts/deploy.js upgrade",
     "chain": "dfx start --clean",
     "fix-declarations": "node scripts/fix-declarations.js",
     "generate": "dfx generate backend && yarn fix-declarations"

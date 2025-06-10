@@ -1,11 +1,12 @@
 // actor.ts
 import { createReactor } from "@ic-reactor/react"
 import { idlFactory, backend } from "@/app/declarations/backend"
+import { icpConfig } from "@/icp-config"
 
 type Actor = typeof backend
 
 export const { useActorStore, useAuth, useQueryCall, useUpdateCall } = createReactor<Actor>({
-  canisterId: process.env.NEXT_PUBLIC_CANISTER_ID_BACKEND || "",
+  canisterId: icpConfig.canisterId,
   idlFactory,
-  withLocalEnv: process.env.NEXT_PUBLIC_DFX_NETWORK === "local",
+  withLocalEnv: icpConfig.network === "local",
 })

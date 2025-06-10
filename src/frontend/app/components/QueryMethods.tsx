@@ -5,6 +5,7 @@ import { useQueryCall } from '../actor/actor';
 import { Actor } from '@dfinity/agent';
 import { backend } from '@/app/declarations/backend';
 import { _SERVICE } from '@/app/declarations/backend/backend.did';
+import { icpConfig } from '@/icp-config';
 
 const QueryMethods: React.FC = () => {
   const [queryMethods, setQueryMethods] = useState<[string, any][]>([]);
@@ -23,7 +24,7 @@ const QueryMethods: React.FC = () => {
   }, [backend]);
 
   return (
-    <div key={queryMethods.toString()} style={{ marginTop: '20px' }}>
+    <div key={`queryMethods-${queryMethods.toString()}-${icpConfig.lastDeployed}`} style={{ marginTop: '20px' }}>
       <h3>Query Methods (Auto-refreshing)</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {queryMethods.map(([methodName, _]) => (
