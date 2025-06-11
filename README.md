@@ -1,201 +1,280 @@
-# `playground`
+# Scaffold-ICP
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+A modern, type-safe development framework for building Internet Computer (ICP) dApps with Next.js and React. Scaffold-ICP provides a streamlined developer experience with pre-configured tooling, type-safe contract interactions, and rapid deployment capabilities.
 
-To learn more before you start working with `playground`, see the following documentation available online:
+## 🚀 Quick Start
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
-- [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
+### Prerequisites
 
-If you want to start working on your project right away, you might want to try the following commands:
+- Node.js 22+
+- Yarn package manager
+- DFX (Internet Computer SDK)
 
-Install dfx:
+### Installation
+
+Install DFX:
 
 ```bash
 sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 dfx --version
 ```
 
+Clone and setup the project:
+
 ```bash
-dfx help
-dfx canister --help
+git clone https://github.com/gianalarcon/scaffold-icp.git
+cd scaffold-icp
+yarn install
 ```
 
-## Running the project locally
+### Running Locally
 
-If you want to test your project locally, you can use the following commands:
+Start the local ICP replica:
 
 ```bash
-# Starts the replica, running in the background
 yarn chain
+```
 
-# Install necessary dependencies
-yarn install
+Deploy your canisters:
 
-# Build NextJS for deploying to frontend canister
-yarn build
-
-# Deploys your canisters to the local replica and generates your candid interface
+```bash
 yarn deploy
 ```
 
-To start the frontend locally (not deploy as a canister), run:
+Start the frontend development server:
 
 ```bash
-yarn dev
+yarn start
 ```
 
-Which will start a server at `http://localhost:3001`, proxying API requests to the replica at port 4943.
+Your dApp will be available at `http://localhost:3000` with hot reload enabled.
 
-To deploy on vercel, make sure you first deploy the canister to mainnet or playground by running:
+## 🏗️ Architecture
 
-```bash
-# Playground
-yarn deploy --network playground
+### Project Structure
 
-# Mainnet
-yarn deploy --network ic
+```
+scaffold-icp/
+├── .yarn/                 # Yarn workspace files  
+├── node_modules/          # Dependencies
+├── src/
+│   ├── backend/
+│   │   └── main.mo        # Motoko backend canister
+│   └── frontend/          # Next.js frontend workspace
+│       ├── app/           # Next.js App Router pages
+│       │   ├── actor/     # IC Reactor hooks and setup
+│       │   ├── components/ # React components
+│       │   ├── declarations/ # Auto-generated Candid interfaces
+│       │   ├── types/     # TypeScript type definitions
+│       │   ├── layout.tsx  # App layout
+│       │   └── page.tsx    # Home page
+│       ├── dfx.json       # DFX configuration
+│       ├── icp-config.ts  # ICP configuration
+│       ├── package.json   # Frontend dependencies
+├── package.json           # Root workspace configuration
 ```
 
-### Deploying to Vercel
+### Key Components
 
-```bash
-yarn vercel
-```
+**Frontend Stack:**
 
-### Additional commands
+- **Next.js 15.2.0**: React framework with static export for IC deployment
+- **TypeScript**: Full type safety throughout the application
+- **IC Reactor 1.16.0**: Type-safe React hooks for canister interactions
 
-To upgrade the backend canister, run:
+**Backend Integration:**
 
-```bash
-yarn deploy:upgrade
-```
+- **Candid Interface Generation**: Automatic TypeScript types from Motoko/Rust canisters
+- **Agent-JS**: Official ICP JavaScript agent for canister communication
+- **Multi-Network Support**: Local, playground, and mainnet deployments
 
-To run the local chain replica in background, run:
+### Type-Safe Contract Interactions
 
-```bash
-yarn chain --background
-```
-
-To generate the candid interface, run:
-
-```bash
-yarn generate
-```
-
-### Note for NextJS
-
-- After deploying your backend code as shown above, you can run Next.js local dev server npm run dev and edit your frontend code with all the benefits of hot code deploy.
-
-- One thing to note is we use Next.js static code export here for hosting in Internet Computer so we can't use any features of Next.js that require server side NodeJS. Potentially, there might be ways to use Internet Computer canister as backend while deploying Next.js dapp to a hosting like Vercel that supports NodeJS server in the future. Further research is needed on that aspect. However, if you do want to run everything decentralized on blockchain including the frontend, you would want to deploy the exported static code to Internet Computer as well.
-
-### Note on frontend environment variables
-
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
-
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-
-### Type-Safe Contract Interaction with IC Reactor
-
-This explains how to implement type-safe contract interactions in your Internet Computer (IC) dApp using the IC Reactor library.
-
-#### Overview
-
-The IC Reactor library provides a set of React hooks that enable type-safe interactions with IC canisters. It leverages TypeScript's type system to ensure compile-time type safety for all contract interactions.
-
-#### Basic Setup
+Scaffold-ICP leverages IC Reactor for type-safe canister interactions:
 
 ```typescript
-import { createReactor } from "@ic-reactor/react"
-import { idlFactory, your_backend } from "declarations/your_backend"
-
-type Actor = typeof your_backend
-
+// Auto-generated from your canister interface
 export const { useActorStore, useAuth, useQueryCall, useUpdateCall } = createReactor<Actor>({
-  canisterId: process.env.NEXT_PUBLIC_CANISTER_ID_YOUR_BACKEND || "",
+  canisterId: icpConfig.canisterId,
   idlFactory,
-  withLocalEnv: process.env.NEXT_PUBLIC_DFX_NETWORK === "local",
+  withLocalEnv: icpConfig.network === "local",
 })
+
+// Configuration based on your last deployed canister 
+export const icpConfig: ICPConfig = {
+  canisterId: "uxrrr-q7777-77774-qaaaq-cai",
+  network: "local",
+  host: "http://localhost:4943",
+  lastDeployed: "2025-06-10T15:03:51.659Z"
+}
+
+// Separate component for each query method result
+const QueryMethodResult: React.FC<{ methodName: keyof _SERVICE }> = ({ methodName }) => {
+  const { data, error, refetch } = useQueryCall({
+    functionName: methodName,
+    args: [],
+    refetchOnMount: true,
+    refetchInterval: 5000, // Refetch every 5 seconds
+  });
+
 ```
 
-### Available Hooks
+## 🔧 Features Implemented
 
-#### 1. useQueryCall
-For querying canister methods:
+### ✅ Development Experience
 
-```typescript
-const { call, data, loading, error } = useQueryCall({
-  functionName: 'getCount',
-  args: [],
-  refetchOnMount: true,
-  refetchInterval: 5000, // Optional: Auto-refresh every 5 seconds
-});
-```
+- **Hot Reload**: Instant frontend updates during development
+- **Type Safety**: End-to-end TypeScript with auto-generated canister types
+- **Multi-Network Deployment**: Seamless deployment to local, playground, or mainnet
+- **Modern Tooling**: Next.js App Router, ES modules, and latest JavaScript features
+- **Yarn Workspaces**: Monorepo structure for better dependency management
 
-#### 2. useUpdateCall
-For calling update methods:
+### ✅ IC Integration
 
-```typescript
-const { call, data, loading, error } = useUpdateCall({
-  functionName: 'increment',
-  args: [],
-});
-```
+- **Candid Auto-Generation**: Automatic TypeScript interface generation from canisters
+- **Identity Management**: Easy to integrate with Internet Identity
+- **Agent Configuration**: Pre-configured IC agents for different networks
+- **Static Export**: Next.js static export optimized for IC frontend canisters
+- **Real-time Updates**: Auto-refresh capabilities with configurable intervals
 
-#### 3. useAuth
-For authentication-related functionality:
+### ✅ Developer Tools
 
-```typescript
-const { identity, isAuthenticated } = useAuth();
-```
+- **Script Automation**: Yarn scripts for common development tasks
+- **Environment Management**: Network-specific configurations
+- **Vercel Integration**: Optional deployment to Vercel for hybrid setups
+- **TypeScript Strict Mode**: Enhanced type checking and error prevention
 
-### Type Safety Features
+## 📚 Usage Examples
 
-1. **Method Name Validation**: The `functionName` parameter is type-checked against your canister's interface.
-2. **Argument Type Checking**: Arguments passed to methods are validated against the Candid interface.
-3. **Return Type Inference**: Return types are automatically inferred from the Candid interface.
-
-### Example Usage
+### Basic Counter Component
 
 ```typescript
 import React from 'react';
-import { useQueryCall, useUpdateCall } from './actor/actor';
+import { useQueryCall, useUpdateCall } from '../actor/actor';
 
 const Counter: React.FC = () => {
-  // Query call
-  const { data: count } = useQueryCall({
+  const { data: count, loading } = useQueryCall({
     functionName: 'getCount',
     args: [],
     refetchOnMount: true,
   });
 
-  // Update call
-  const { call: increment } = useUpdateCall({
+  const { call: increment, loading: incrementing } = useUpdateCall({
     functionName: 'increment',
     args: [],
   });
 
   return (
-    <div>
-      <h2>Count: {count !== undefined ? Number(count) : 'Loading...'}</h2>
-      <button onClick={() => increment()}>Increment</button>
+    <div className="flex flex-col items-center p-6 space-y-4">
+      <h2 className="text-2xl font-bold">
+        Count: {loading ? 'Loading...' : count?.toString()}
+      </h2>
+      <button 
+        onClick={() => increment()}
+        disabled={incrementing}
+        className="px-6 py-2 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-lg"
+      >
+        {incrementing ? 'Incrementing...' : 'Increment'}
+      </button>
     </div>
   );
 };
 ```
 
-### Troubleshooting
+### Authentication Integration
 
-1. **Type Errors**: If you encounter type errors, ensure your Candid interface is up to date by running:
+```typescript
+import { useAuth } from '../actor/actor';
 
-```bash
-yarn chain
+const AuthComponent: React.FC = () => {
+  const { identity, isAuthenticated, login, logout } = useAuth();
+
+  return (
+    <div className="p-4 border rounded-lg">
+      {isAuthenticated ? (
+        <div className="space-y-2">
+          <p className="text-green-600">✅ Authenticated</p>
+          <p className="text-sm text-gray-600 break-all">
+            Principal: {identity?.getPrincipal().toString()}
+          </p>
+          <button 
+            onClick={logout}
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded"
+          >
+            Logout
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <p className="text-orange-600">⚠️ Not authenticated</p>
+          <button 
+            onClick={login}
+            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+          >
+            Login with Internet Identity
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 ```
 
-### Resources
+## 🛠️ Available Scripts
 
+### Development
+
+- `yarn start` - Start frontend development server
+- `yarn chain` - Start local ICP replica
+- `yarn deploy` - Deploy canisters to current network
+- `yarn generate` - Regenerate Candid interfaces
+
+### Building & Deployment
+
+- `yarn build` - Build frontend for production
+- `yarn deploy:upgrade` - Upgrade existing canisters
+- `yarn vercel` - Deploy to Vercel (hybrid setup)
+
+### Network Deployment
+
+```bash
+# Deploy to playground network
+yarn deploy --network playground
+
+# Deploy to mainnet
+yarn deploy --network ic
+```
+
+## ⚠️ Current Limitations
+
+### Known Constraints
+
+- **Next.js Server Features**: No server-side rendering or API routes (static export only)
+- **Node.js Dependencies**: Limited to browser-compatible packages
+- **Asset Size**: Frontend canister has storage limitations for large assets
+- **Real-time Updates**: No WebSocket support in current implementation
+- **Mobile Optimization**: Limited mobile-specific features and PWA capabilities
+
+### Planned Improvements
+
+- Enhanced debugging tools and error handling
+- Built-in testing framework integration with Jest and Cypress
+- Additional pre-built components for common dApp patterns
+- Performance monitoring and optimization tools
+- Mobile-first responsive design improvements
+- WebAssembly integration utilities
+
+### Issues and Feature Requests
+
+- Use GitHub Issues to report bugs or request features
+- Provide detailed reproduction steps for bugs
+- Include use cases and benefits for feature requests
+
+## 📖 Resources
+
+### Official Documentation
+
+- [Internet Computer Documentation](https://internetcomputer.org/docs/)
 - [IC Reactor Documentation](https://github.com/B3Pay/ic-reactor)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Motoko Programming Language](<https://internetcomputer.org/docs>)

@@ -8,7 +8,6 @@
   "scripts": {
     "start": "yarn workspace frontend start",
     "build": "yarn workspace frontend build",
-    "dev": "yarn workspace frontend start",
     "deploy": "yarn workspace frontend deploy",
     "deploy:upgrade": "yarn workspace frontend deploy:upgrade",
     "chain": "yarn workspace frontend chain",
