@@ -6,8 +6,8 @@ export type ICPConfig = {
 }
 
 export const icpConfig: ICPConfig = {
-  canisterId: "uxrrr-q7777-77774-qaaaq-cai",
-  network: "local",
-  host: "http://localhost:4943",
-  lastDeployed: "2025-06-10T15:03:51.659Z"
+  canisterId: "5jw7w-wiaaa-aaaab-qacza-cai",
+  network: "playground",
+  host: "https://icp0.io",
+  lastDeployed: "2025-06-13T05:01:37.078Z"
 }

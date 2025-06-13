@@ -37,21 +37,6 @@ const nextConfig = {
   logging: {
     incomingRequests: false,
   },
-  images: {
-    dangerouslyAllowSVG: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "identicon.starknet.id",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "img.starkurabu.com",
-        pathname: "/**",
-      },
-    ],
-  },
   typescript: {
     ignoreBuildErrors: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
   },
