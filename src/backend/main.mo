@@ -16,7 +16,7 @@ actor {
 	//     counter := 0;
 	// };
 
-	public query func MultyplyCount(times : Nat) : async Nat {
+	public query func MultiplyCounter(times : Nat) : async Nat {
 		return times * counter;
 	};
 };
