@@ -2,6 +2,7 @@
 
 A modern, type-safe development framework for building Internet Computer (ICP) dApps with Next.js and React. Scaffold-ICP provides a streamlined developer experience with pre-configured tooling, type-safe contract interactions, and rapid deployment capabilities.
 
+[Video demo](https://x.com/gianmalarcon/status/1933403896246120497)
 ## 🚀 Quick Start
 
 ### Prerequisites
